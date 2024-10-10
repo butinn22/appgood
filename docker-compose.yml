@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    command: uvicorn app.main:app --host 127.0.0.53 --port 8080 --reload
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql://postgres:Prosoft22@localhost/Stocks
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+
+  db:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Prosoft22
+      POSTGRES_DB: Stocks
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  alembic:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: alembic
+    command: alembic upgrade head
+    environment:
+      - DATABASE_URL=postgresql://postgres:Prosoft22@localhost/Stocks
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
