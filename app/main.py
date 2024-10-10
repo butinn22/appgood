@@ -8,7 +8,7 @@ from utils import get_stock_data,hash_string
 import uuid
 from datetime import datetime,timedelta,timezone
 from auth.jwt import create_access_token,get_current_user_by_token, validate_token, TIME_LIFE_TOKEN
-from utils import validate_pass, update_users_base,blacklist,users_base
+from utils import validate_pass, update_users_base,blacklist,users_base,create_stock,get_stock_data
 from db.db import MySession
 from db.classes import MainBase
 from db.classes import Users,Tasks,Stocks
